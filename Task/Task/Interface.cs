@@ -18,13 +18,13 @@ namespace Task
             {
                 string example = Console.ReadLine();
 
-                string WithoutMinusSpace = Body.Join("+-", Body.TrimArray(Body.Break('-', (example))));
-                int sum = Body.Sum(Body.StringToIntArray(Body.Break('+', WithoutMinusSpace)));
-                Body.Print(example, sum);
+                Body.Result(example);
             
                 end = Console.ReadKey(true);
             }
             while (end.Key != ConsoleKey.Escape);
+
+            Console.WriteLine("Спасибо за внимание :)");
         }
     }
 }

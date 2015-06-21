@@ -1,49 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Task
 {
-    class Body
+    public static class Body
     {
-        public static string[] Break(char sign,string Data) // разбиваем строку на массив строк по + (потом добавить еще 1 параметр и резать по - и по " ").
+        public static void Result(string example) // итоговый метод
         {
-            string[] element = Data.Split(new Char[] { sign });
+            var withoutMinusSpace = Join("+-", TrimArray(Break('-', example)));
+            var sum = Sum(StringToIntArray(Break('+', withoutMinusSpace)));
+            Print(example, sum);
+        }
+
+        private static string[] Break(char sign, string data) // разбиваем строку на массив строк по знакам.
+        {
+            var element = data.Split(new[] { sign });
             return element;
         }
 
-        public static string[] TrimArray(string[] Data) // тримим массив
+        private static string[] TrimArray(IList<string> data) // тримим массив
         {
-            int QuantityString = Data.Length;
-            string[] TrimString = new string[QuantityString];
-            for (int i = 0; i < QuantityString; i++)
+            var quantityString = data.Count;
+            var trimString = new string[quantityString];
+            for (var i = 0; i < quantityString; i++)
             {
-                TrimString[i] = Trim(Data[i]);
+                trimString[i] = Trim(data[i]);
             }
 
-            return TrimString;
+            return trimString;
         }
 
-        public static string Trim(string Data) // тримим поэлементно
+        private static string Trim(string data) // тримим поэлементно
         {
-            string element = Data.Trim();
-            return Data;
+            var element = data.Trim();
+            return element;
         }
 
-        public static string Join(string separator, string[] Data) // сшиваем строки по знаку
+        private static string Join(string separator, string[] data) // сшиваем строки по знаку
         {
-            return String.Join(separator, Data);
+            return string.Join(separator, data);
         }
 
-        public static int[] StringToIntArray(string[] element) // переводим массив строк в массив чисел
+        private static IEnumerable<int> StringToIntArray(IList<string> element) // переводим массив строк в массив чисел
         {
-            int QuantityString = element.Length;
+            var quantityString = element.Count;
 
-            int[] number = new int[QuantityString];
+            var number = new int[quantityString];
 
-            for (int i = 0; i < QuantityString; i++)
+            for (var i = 0; i < quantityString; i++)
             {
                 number[i] = Branch(StringToInt(element[i]));
             }
@@ -51,53 +56,38 @@ namespace Task
             return number;
         }
 
-        public static int Branch(int numberMod1) // обрезаем числа-слагаемые до 1000
+        private static int Branch(int numberMod1) // обрезаем числа-слагаемые до 1000
         {
-            const int limitLeft = -1000;
-            const int limitRight = 1000;
-
-            if (numberMod1 < limitLeft)
+            if (numberMod1 < -1000)
             {
-                return limitLeft;
+                return -1000;
             }
 
-            if (numberMod1 > limitRight)
+            if (numberMod1 > 1000)
             {
-                return limitRight;
+                return 1000;
             }
 
-            int numberMod2 = numberMod1;
+            var numberMod2 = numberMod1;
             return numberMod2;
         }
 
-        public static int StringToInt(string element) // переводим строку слагаемых в число, переводим не инты в 0
+        private static int StringToInt(string element) // переводим строку слагаемых в число, переводим не инты в 0
         {
             int numberMod1;
-            bool result = int.TryParse(element, out numberMod1);
-            if (result)
-            {
-                return numberMod1;
-            }
-            else
-            {
-                return 0;
-            }
+            var result = int.TryParse(element, out numberMod1);
+
+            return result ? numberMod1 : 0;
         }
 
-        public static int Sum(int[] number) // суммируем все числа массива
+        private static int Sum(IEnumerable<int> number) // суммируем все числа массива
         {
-            int Sum = 0;
-            for (int i = 0; i < number.Length; i++)
-            {
-                Sum += number[i];
-            }
-
-            return Sum;
+            return number.Sum();
         }
 
-        public static void Print(string example, int Data) // печатаем исходный пример с итоговой суммой.
+        private static void Print(string example, int data) // печатаем исходный пример с итоговой суммой.
         {
-            Console.WriteLine("{0} = {1}", example, Data);
+            Console.WriteLine("{0} = {1}", example, data);
         }
     }
 }
