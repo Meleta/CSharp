@@ -6,11 +6,12 @@ namespace Task
 {
     public static class Body
     {
-        public static void Result(string example) // итоговый метод
+        public static int Result(string example) // итоговый метод
         {
             var withoutMinusSpace = Join("+-", TrimArray(Break('-', example)));
             var sum = Sum(StringToIntArray(Break('+', withoutMinusSpace)));
             Print(example, sum);
+            return sum;
         }
 
         private static string[] Break(char sign, string data) // разбиваем строку на массив строк по знакам.

@@ -1,0 +1,7 @@
+D:\Csharp\Task\UnitTest\bin\Debug\UnitTest.dll
+D:\Csharp\Task\UnitTest\bin\Debug\UnitTest.pdb
+D:\Csharp\Task\UnitTest\obj\Debug\UnitTest.csprojResolveAssemblyReference.cache
+D:\Csharp\Task\UnitTest\obj\Debug\UnitTest.dll
+D:\Csharp\Task\UnitTest\obj\Debug\UnitTest.pdb
+D:\Csharp\Task\UnitTest\bin\Debug\Task.exe
+D:\Csharp\Task\UnitTest\bin\Debug\Task.pdb

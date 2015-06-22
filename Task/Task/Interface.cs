@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Task
 {
-    class Interface
+    public static class Interface
     {
         public static void Calculator()
         {
@@ -16,7 +11,7 @@ namespace Task
             ConsoleKeyInfo end;
             do
             {
-                string example = Console.ReadLine();
+                var example = Console.ReadLine();
 
                 Body.Result(example);
             
