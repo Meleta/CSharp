@@ -7,9 +7,9 @@ namespace UnitTest
     public class UnitTest1
     {
         [TestMethod]
-        public void SingleValueTest()
+        public void InputErrorTest()
         {
-            Assert.AreEqual(42, Body.Result("42"));
+            Assert.AreEqual(0, Body.Result("dsdfsgd"));
         }
 
         [TestMethod]
@@ -34,6 +34,18 @@ namespace UnitTest
         public void SpaceTest()
         {
             Assert.AreEqual(44, Body.Result(" 42 + 5 - 3"));
+        }
+
+        [TestMethod]
+        public void NegativeNumberTest()
+        {
+            Assert.AreEqual(-333, Body.Result("-333"));
+        }
+
+        [TestMethod]
+        public void NullTest()
+        {
+            Assert.AreEqual(0, Body.Result(null));
         }
     }
 }

@@ -8,10 +8,16 @@ namespace Task
     {
         public static int Result(string example) // итоговый метод
         {
-            var withoutMinusSpace = Join("+-", TrimArray(Break('-', example)));
-            var sum = Sum(StringToIntArray(Break('+', withoutMinusSpace)));
-            Print(example, sum);
-            return sum;
+            if (example != null)
+            {
+                var withoutMinusSpace = Join("+-", TrimArray(Break('-', example)));
+                var sum = Sum(StringToIntArray(Break('+', withoutMinusSpace)));
+                Print(example, sum);
+                return sum;
+            }
+
+            Console.WriteLine("Пустая строка.");
+            return 0;
         }
 
         private static string[] Break(char sign, string data) // разбиваем строку на массив строк по знакам.
