@@ -1,100 +1,115 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Task
 {
     public static class Body
     {
-        public static int Result(string example) // итоговый метод
+        public static int Result(string incomingString)
         {
-            if (example != null)
+            var sum = Rec(NullOrEmpty(incomingString));
+            Print(incomingString, sum);
+            return sum;
+        }
+
+        private static string NullOrEmpty(string testString) // проверка на ноль
+        {
+            return string.IsNullOrEmpty(testString) ? "0" : testString;
+        }
+
+        private static int Rec(string intactString) // рекурсия
+        {
+            if (intactString == "0")
             {
-                var withoutMinusSpace = Join("+-", TrimArray(Break('-', example)));
-                var sum = Sum(StringToIntArray(Break('+', withoutMinusSpace)));
-                Print(example, sum);
-                return sum;
+                return 0;
             }
 
-            Console.WriteLine("Пустая строка.");
-            return 0;
+            var fragment = Remove(intactString);
+            var number = Branch(StringToInt(ReplaceMinus(ReplacePlus(fragment)))); 
+            var sum = number + Rec(SubString(intactString));
+            return sum; // нужно чтоб счетчик останавливался здесь
         }
 
-        private static string[] Break(char sign, string data) // разбиваем строку на массив строк по знакам.
+        private static string Remove(string intactString) // режем до 1го + или -
         {
-            var element = data.Split(new[] { sign });
-            return element;
+            var stringTrim = intactString.Trim();
+            var index = Index(stringTrim);
+            return CutRemove(intactString, index);
         }
 
-        private static string[] TrimArray(IList<string> data) // тримим массив
+        private static int Index(string stringTrim)
         {
-            var quantityString = data.Count;
-            var trimString = new string[quantityString];
-            for (var i = 0; i < quantityString; i++)
+            var stringShort = stringTrim.Remove(0, 1);
+            return IndexAny(stringShort) == -1 ? -1 : IndexAny(stringShort) + 1;
+        }
+
+        private static int IndexAny(string indexableString) // номер 1го + или - 
+        {
+            return indexableString.IndexOfAny(new[] { '+', '-' });
+        }
+
+        private static string CutRemove(string stringTrim, int index) // режем до 1го + или -
+        {
+            return index == -1 ? stringTrim : stringTrim.Remove(index);
+        }
+
+        private static int Branch(int number) // обрезаем числа-слагаемые до 1000
+        {
+            if (number < -1000)
             {
-                trimString[i] = Trim(data[i]);
+                return -1000;
             }
 
-            return trimString;
-        }
-
-        private static string Trim(string data) // тримим поэлементно
-        {
-            var element = data.Trim();
-            return element;
-        }
-
-        private static string Join(string separator, string[] data) // сшиваем строки по знаку
-        {
-            return string.Join(separator, data);
-        }
-
-        private static IEnumerable<int> StringToIntArray(IList<string> element) // переводим массив строк в массив чисел
-        {
-            var quantityString = element.Count;
-
-            var number = new int[quantityString];
-
-            for (var i = 0; i < quantityString; i++)
+            if (number > 1000)
             {
-                number[i] = Branch(StringToInt(element[i]));
+                return 1000;
             }
 
             return number;
         }
 
-        private static int Branch(int numberMod1) // обрезаем числа-слагаемые до 1000
+        private static int StringToInt(string fragmentMod) // переводим в число
         {
-            if (numberMod1 < -1000)
+            int number;
+            var result = int.TryParse(fragmentMod, out number);
+
+            return result ? number : 0;
+        }
+
+        private static string ReplaceMinus(string stringTrim) // замена
+        {
+            if (stringTrim.StartsWith("- "))
             {
-                return -1000;
+                return stringTrim.Replace("- ", "-");
             }
 
-            if (numberMod1 > 1000)
+            return stringTrim;
+        }
+
+        private static string ReplacePlus(string stringTrim) // замена
+        {
+            if (stringTrim.StartsWith("+ ") || stringTrim.StartsWith("+") || stringTrim.StartsWith(" +"))
             {
-                return 1000;
+                return stringTrim.TrimStart('+');
             }
 
-            var numberMod2 = numberMod1;
-            return numberMod2;
+            return stringTrim;
         }
 
-        private static int StringToInt(string element) // переводим строку слагаемых в число, переводим не инты в 0
+        private static string SubString(string intactString) // строка без куска // протестить
         {
-            int numberMod1;
-            var result = int.TryParse(element, out numberMod1);
-
-            return result ? numberMod1 : 0;
+            var stringTrim = intactString.Trim();
+            var index = Index(stringTrim);
+            return CutSubstring(stringTrim, index);
         }
 
-        private static int Sum(IEnumerable<int> number) // суммируем все числа массива
+        private static string CutSubstring(string stringTrim, int index) // режем сабстринг
         {
-            return number.Sum();
+            return index == -1 ? "0" : stringTrim.Substring(index);
         }
 
-        private static void Print(string example, int data) // печатаем исходный пример с итоговой суммой.
+        private static void Print(string incomingString, int sum)
         {
-            Console.WriteLine("{0} = {1}", example, data);
+            Console.WriteLine("{0} = {1}", incomingString, sum);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace Task
 {
     public static class Interface
@@ -11,9 +12,9 @@ namespace Task
             ConsoleKeyInfo end;
             do
             {
-                var example = Console.ReadLine();
+                var incomingString = Console.ReadLine();
 
-                Body.Result(example);
+                Body.Result(incomingString);
             
                 end = Console.ReadKey(true);
             }
